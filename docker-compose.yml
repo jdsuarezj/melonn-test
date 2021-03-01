@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+  melonn-back:
+    container_name: melonn-back
+    build:
+      context: ./melonn-back
+    env_file:
+      - ./melonn-back/.env
+    ports:
+      - 3001:3001
+    networks:
+      - melonn
+    volumes:
+      - ./melonn-back/:/app
+      - /app/node_modules
+
+  melonn-front:
+    container_name: melonn-front
+    build:
+      context: ./melonn-front
+    ports:
+      - 3000:3000
+    networks:
+      - melonn
+    volumes:
+      - ./melonn-front/:/app
+      - /app/node_modules
+
+networks:
+  melonn:
+    external:
+      name: melonn
